@@ -1,4 +1,6 @@
 <script lang="ts">
+	import '../app.css';
+
 	let { children } = $props();
 </script>
 
@@ -6,7 +8,7 @@
 
 <style>
 	:global(body) {
-		background-color: #F9F3E8;
+		background-color: #f9f3e8;
 		color: #171717;
 		margin: 0;
 		font-family: system-ui, sans-serif;

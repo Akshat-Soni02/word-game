@@ -66,6 +66,7 @@
         font-size: 1.7rem;
         color: white;
         border-color: #199948;
+        border-width: 2px;
         font-family: system-ui, sans-serif;
         font-weight: 700;
     }
@@ -78,6 +79,7 @@
         color: white;
         font-family: system-ui, sans-serif;
         font-weight: 700;
+        border-width: 2px;
     }
 
     .modal_body {
@@ -86,6 +88,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
     }
 
     .modal_body_text {
@@ -97,6 +100,7 @@
     .modal_button {
         background-color: #EF4545;
         border-color: #B93333;
+        border-width: 2px;
         padding: 0.5rem;
         font-size: 1.7rem;
         color: white;
@@ -109,5 +113,6 @@
         border-radius: 10px;
         padding: 0.7rem;
         text-align: center;
+        border-width: 3px;
     }
 </style>

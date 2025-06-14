@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Files } from 'lucide-svelte';
+    import ToolTip from '$lib/components/ToolTip.svelte';
   
     let room_id = $state('abc910');
     let isRoomCreator = $state(true);
@@ -30,17 +31,19 @@
   
       <div class="room-id-wrapper">
         <h3 class="room-id-label">Room ID</h3>
-        <div
-          class="room-id"
-          role="button"
-          tabindex="0"
-          onclick={copyToClipboard}
-          onkeydown={handleKeydown}
-          aria-label="Copy Room ID"
-        >
-          <p class="room-id-text">{room_id}</p>
-          <Files size={18} color="#b3afa7f8" />
-        </div>
+        <ToolTip content='Copy'>
+            <div
+                class="room-id"
+                role="button"
+                tabindex="0"
+                onclick={copyToClipboard}
+                onkeydown={handleKeydown}
+                aria-label="Copy Room ID"
+                >
+                <p class="room-id-text">{room_id}</p>
+                <Files size={18} color="#b3afa7f8" />
+            </div>
+        </ToolTip>
       </div>
   
       {#if isRoomCreator}
@@ -53,9 +56,9 @@
         <div class="players-grid">
             {#each players as player}
             <div class="player-card">
-                <div class="avatar-placeholder">
+                <!-- <div class="avatar-placeholder">
                 {player.player_name.charAt(0).toUpperCase()}
-                </div>
+                </div> -->
                 <div class="player-name">{player.player_name}</div>
             </div>
             {/each}
@@ -96,13 +99,13 @@
     .lobby-start {
       background-color: #21C55E;
       border-color: #199948;
-      border-width: 1px;
+      border-width: 2px;
     }
   
     .lobby-exit {
       background-color: #EF4545;
       border-color: #b93333;
-      border-width: 1px;
+      border-width: 2px;
     }
   
     .room-id-wrapper {
@@ -135,7 +138,7 @@
   
     .players-section {
     width: 100%;
-    padding: 0.5rem;
+    padding: 1rem;
     background-color: #fffaf2;
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
