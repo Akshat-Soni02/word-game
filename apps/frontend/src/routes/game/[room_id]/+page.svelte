@@ -17,9 +17,12 @@
 
 	<InputOTP.Root maxlength={5} pattern={REGEXP_ONLY_CHARS}>
 		{#snippet children({ cells })}
-			<InputOTP.Group class="otp-inputs">
+			<InputOTP.Group class="flex justify-center flex-wrap gap-5 sm:gap-4">
 				{#each cells.slice(0, 6) as cell}
-					<InputOTP.Slot {cell} class=""/>
+				<InputOTP.Slot
+					{cell}
+					class="w-20 h-20 text-4xl text-center font-semibold text-[#a9a9a9] border-2 border-[#b3afa7] bg-[#fdfaf5] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#b3afa7]/40 transition-all duration-150 font-[Segoe UI]"
+				/>
 				{/each}
 			</InputOTP.Group>
 		{/snippet}
@@ -66,38 +69,7 @@
 		color: #e63946;
 	}
 
-	.otp-inputs {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		gap: 1.25rem;
-	}
-
-	.otp-slot {
-		width: 5rem;
-		height: 5rem;
-		font-size: 2.5rem;
-		text-align: center;
-		border: 3px solid #ffc857;
-		border-radius: 1rem;
-		background-color: #fff7eb;
-		box-shadow: 0 0 10px rgba(255, 200, 87, 0.2);
-		transition: all 0.2s;
-	}
-
-	.otp-slot:focus {
-		outline: none;
-		border-color: #ffb347;
-		box-shadow: 0 0 15px rgba(255, 183, 0, 0.4);
-	}
-
 	@media screen and (max-width: 600px) {
-		.otp-slot {
-			width: 4rem;
-			height: 4rem;
-			font-size: 2rem;
-		}
-
 		.page-header {
 			top: 0.5rem;
 		}

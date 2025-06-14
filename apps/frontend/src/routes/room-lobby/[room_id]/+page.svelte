@@ -1,18 +1,18 @@
 <script lang="ts">
+    import { page } from '$app/state';
     import { Files } from 'lucide-svelte';
     import ToolTip from '$lib/components/ToolTip.svelte';
+    import { toast } from 'svelte-sonner';
+    import { socket } from '$lib/stores/socket';
+	  import { SocketChannels, SocketMessages } from '$lib/constants/states';
+	import type { SomeoneJoinedRoomMessage } from '$lib/constants/types';
   
-    let room_id = $state('abc910');
+    let { room_id } = page.params;
     let isRoomCreator = $state(true);
-    const players = [
-      { player_name: 'ramu', player_points: 0 },
-      { player_name: 'shyamu', player_points: 0 },
-      { player_name: 'jetha', player_points: 0 },
-      { player_name: 'popat', player_points: 0 },
-      { player_name: 'sodhi', player_points: 0 },
-      { player_name: 'babita', player_points: 0 },
-      { player_name: 'daya', player_points: 0 }
-    ];
+
+    const playersRaw = sessionStorage.getItem('players');
+    let players = $derived(playersRaw ? JSON.parse(playersRaw) : []);
+
   
     function copyToClipboard() {
       navigator.clipboard.writeText(room_id)
@@ -23,6 +23,19 @@
     function handleKeydown(e: KeyboardEvent) {
       if (e.key === 'Enter' || e.key === ' ') copyToClipboard();
     }
+
+    $effect(() => {
+      if($socket) {
+        $socket.on(SocketChannels.DEFAULT_CHANNEL, (data, callback) => {
+            const message: SomeoneJoinedRoomMessage = JSON.parse(data.toString());
+            if(message && message.type === SocketMessages.SOMEONE_JOINED) {
+                sessionStorage.setItem('players', JSON.stringify(message.payload.players));
+                players = message.payload.players;
+                toast(`${message.payload.player_name} joined`);
+            }
+        })
+      }
+    })
   </script>
   
   <div class="page-container">
@@ -56,9 +69,6 @@
         <div class="players-grid">
             {#each players as player}
             <div class="player-card">
-                <!-- <div class="avatar-placeholder">
-                {player.player_name.charAt(0).toUpperCase()}
-                </div> -->
                 <div class="player-name">{player.player_name}</div>
             </div>
             {/each}
@@ -188,6 +198,7 @@
     border-color: #fbbf24;
     }
 
+    /* let this be here for future */
     .avatar-placeholder {
     background-color: #fde68a;
     color: #5a3e2f;
