@@ -1,5 +1,6 @@
 import { Socket } from "socket.io";
 import { Room } from "../Room";
+import { RoomState } from "../states";
 
 export class RoomManager {
     private rooms: Array<Room>;

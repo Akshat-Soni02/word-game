@@ -1,4 +1,6 @@
-type SocketMessage =
+import { SocketMessages } from "./states";
+
+export type SocketMessage =
   | { type: SocketMessages.CREATE_ROOM; payload: CreateRoomRequest }
   | { type: SocketMessages.JOIN_ROOM; payload: JoinRoomRequest }
   | { type: SocketMessages.START_GAME; payload: InitGameRequest }
@@ -6,24 +8,24 @@ type SocketMessage =
   | { type: SocketMessages.WORD_HIT; payload: WordHitRequest };
 
 
-type CreateRoomRequest = {
+export type CreateRoomRequest = {
     player_name: string;
 }
 
-type JoinRoomRequest = {
+export type JoinRoomRequest = {
     player_name: string;
     room_id: string;
 }
 
-type InitGameRequest = {
+export type InitGameRequest = {
     room_id: string;
 }
 
-type TimerEndRequest = {
+export type TimerEndRequest = {
     room_id: string;
 }
 
-type WordHitRequest = {
+export type WordHitRequest = {
     word: string;
     room_id: string;
 }

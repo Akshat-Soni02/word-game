@@ -1,10 +1,10 @@
-enum RoomState {
+export enum RoomState {
     GAME_WAITING = "game_waiting",
     GAME_ONGOING = "game_ongoing",
     GAME_END = "game_end"
 }
 
-enum SocketMessages {
+export enum SocketMessages {
     CREATE_ROOM = "create_room",
     ROOM_CREATED = "room_created",
     JOIN_ROOM = "join_room",
@@ -24,6 +24,6 @@ enum SocketMessages {
     INVALID_REQUEST = "invalid_request"
 }
 
-enum SocketChannels {
+export enum SocketChannels {
     DEFAULT_CHANNEL = "message"
 }

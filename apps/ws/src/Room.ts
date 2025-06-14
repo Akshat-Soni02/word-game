@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
 import { generateRoomId, generateWordSequence } from "./helpers/generator";
 import { Player } from "./Player";
+import { RoomState } from "./states";
 
 export class Room {
     private room_id: string;

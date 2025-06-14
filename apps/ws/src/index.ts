@@ -21,22 +21,20 @@ const server = createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "*",
-        credentials: true
+        origin: "*"
     }
 });
 
 app.use(
     cors({
-        origin: "*",
-        credentials: true
+        origin: "*"
     })
 );
 
 const socket_manager = new SocketManager();
 
 io.on("connection", (socket) => {
-    console.log(`user connected - ${socket.id}`);
+    console.log(`player connected - ${socket.id}`);
     socket.emit('welcome', 'welcome to server');
     socket_manager.handleMessageChannel(socket);
     socket.on('disconnect', () => socket_manager.handleDisconnect(socket)); 

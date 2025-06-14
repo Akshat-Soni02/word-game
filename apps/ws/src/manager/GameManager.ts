@@ -1,6 +1,9 @@
 import { Socket } from "socket.io";
 import { RoomManager } from "./RoomManager";
 import { compareWords } from "../helpers/word";
+import { SocketMessages, SocketChannels } from "../states";
+import { CreateRoomRequest, JoinRoomRequest, InitGameRequest, TimerEndRequest, WordHitRequest } from "../types";
+import { formatPlayers } from "../helpers/formator";
 
 export class GameManager {
     private room_manager: RoomManager;
@@ -17,7 +20,7 @@ export class GameManager {
          */
         socket.emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
             type: SocketMessages.ROOM_CREATED,
-            payload: { room_id: new_room.getRoomId(), players: new_room.getRoomPlayers()}
+            payload: { room_id: new_room.getRoomId(), players: formatPlayers(new_room.getRoomPlayers())}
         }));
     }
 
@@ -36,7 +39,7 @@ export class GameManager {
          */
         socket.emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
             type: SocketMessages.ROOM_JOINED,
-            payload: { players: existing_room.getRoomPlayers() }
+            payload: { players: formatPlayers(existing_room.getRoomPlayers())}
         }));
 
         const players_without_joinee = existing_room.getRoomPlayers().filter((player) => player.getPlayerId() !== socket);
@@ -47,7 +50,7 @@ export class GameManager {
         for (const other_player of players_without_joinee) {
             other_player.getPlayerId().emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                 type: SocketMessages.SOMEONE_JOINED,
-                payload: { players: existing_room.getRoomPlayers(), player_name: data.player_name }
+                payload: { players: formatPlayers(existing_room.getRoomPlayers()), player_name: data.player_name }
             }));
         }
     }
@@ -91,7 +94,7 @@ export class GameManager {
         for(const player of ended_room.getRoomPlayers()) {
             player.getPlayerId().emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                 type: SocketMessages.TIMER_ENDED,
-                payload: { players: ended_room.getRoomPlayers() }
+                payload: { players: formatPlayers(ended_room.getRoomPlayers()) }
             }));
         }
     }
@@ -130,7 +133,7 @@ export class GameManager {
                      */
                     socket.emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                         type: SocketMessages.CORRECT_WORD_GUESS_GAME_END,
-                        payload: { players: running_room.getRoomPlayers() }
+                        payload: { players: formatPlayers(running_room.getRoomPlayers()) }
                     }));
 
                     const active_player = running_room.getRoomPlayers().find((player) => player.getPlayerId() === socket);
@@ -143,7 +146,7 @@ export class GameManager {
                     for (const player of other_players) {
                         player.getPlayerId().emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                             type: SocketMessages.CORRECT_WORD_GAME_END,
-                            payload: { player_id: socket, player_name: active_player?.getPlayerName(), correct_word: compare_result.word, players: running_room.getRoomPlayers()}
+                            payload: { player_name: active_player?.getPlayerName(), correct_word: compare_result.word, players: formatPlayers(running_room.getRoomPlayers())}
                         }));
                     }
 
@@ -169,7 +172,7 @@ export class GameManager {
                     for (const player of other_players) {
                         player.getPlayerId().emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                             type: SocketMessages.CORRECT_WORD,
-                            payload: { player_id: socket, player_name: active_player?.getPlayerName(), correct_word: compare_result.word }
+                            payload: { player_name: active_player?.getPlayerName(), correct_word: compare_result.word }
                         }));
                     }
                 }

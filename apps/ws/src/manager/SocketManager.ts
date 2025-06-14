@@ -1,5 +1,7 @@
 import { Socket } from "socket.io";
 import { GameManager } from "./GameManager";
+import { SocketMessages } from "../states";
+import { SocketMessage } from "../types";
 
 export class SocketManager {
     private game_manager: GameManager;
