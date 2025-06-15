@@ -6,7 +6,7 @@ export const socket = writable<Socket | null>(null);
 
 // only run on the client (not during SSR)
 if (typeof window !== 'undefined') {
-	const curSocket = io('http://localhost:3001');
+	const curSocket = io('https://word-game-socket-backend-702763400167.asia-south1.run.app');
 
 	curSocket.on('connect', () => {
 		console.log('Connected');
