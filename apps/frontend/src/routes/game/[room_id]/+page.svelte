@@ -9,6 +9,7 @@
 	import { toast } from "svelte-sonner";
 	import { goto } from "$app/navigation";
 	import AudioPlayer from "$lib/components/AudioPlayer.svelte";
+	import { onMount } from "svelte";
 
 	let { room_id } = page.params;
 	let guessed_word = $state('');
@@ -19,6 +20,15 @@
 	let feedbackMap: Map<number, { letter: string; shownAt: number }> = new Map();
 	let blockedMap: Map<number, boolean> = new Map();
 	let redrawKey = $state(0);
+
+	onMount(() => {
+		const inputs = document.querySelectorAll('[data-slot="input-otp-slot"] input');
+		inputs.forEach((input) => {
+			// console.log('Detected input type:', input.type, 'inputmode:', input.inputMode);
+			input.setAttribute('type', 'text');
+			input.setAttribute('inputmode', 'text');
+		});
+	});
 
 	function handleMatches(matches: { letter: string; index: number }[]) {
 		const now = Date.now();
