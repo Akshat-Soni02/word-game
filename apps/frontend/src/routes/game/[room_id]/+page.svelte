@@ -155,14 +155,14 @@
 
 	<InputOTP.Root maxlength={5} pattern={REGEXP_ONLY_CHARS} bind:value = {guessed_word} {onComplete}>
 		{#snippet children({ cells })}
-			<InputOTP.Group class="flex justify-center flex-wrap gap-5 sm:gap-4 relative">
+			<InputOTP.Group class="flex justify-center flex-wrap gap-2 sm:gap-3 relative">
 				{#key redrawKey}
 					{#each cells.slice(0, 6) as cell, i}
 						<div class="relative flex flex-col items-center">
 							<!-- Feedback Letter -->
 							{#if feedbacks[i]}
 								<div
-									class="absolute -top-[5.5rem] w-[clamp(3rem,8vw,5rem)] h-[clamp(3rem,8vw,5rem)] flex items-center justify-center text-[clamp(1.5rem,4vw,2rem)] font-semibold bg-green-500 text-white rounded-lg shadow-md fade-in-out transition-all duration-300"
+									class="absolute -top-[5rem] w-[clamp(2.5rem,7vw,4.5rem)] h-[clamp(2.5rem,7vw,4.5rem)] flex items-center justify-center text-[clamp(1.25rem,4vw,1.75rem)] font-semibold bg-green-500 text-white rounded-lg shadow-md fade-in-out transition-all duration-300"
 								>
 									{feedbacks[i]}
 								</div>
@@ -170,8 +170,9 @@
 				
 							<!-- Input Box -->
 							<InputOTP.Slot
+								inputmode="text"
 								{cell}
-								class="w-[clamp(3.5rem,9vw,5rem)] h-[clamp(3.5rem,9vw,5rem)] text-[clamp(2rem,5vw,2.5rem)] text-center font-semibold text-[#a9a9a9] border-2 border-[#b3afa7] bg-[#fdfaf5] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#b3afa7]/40 transition-all duration-150 font-[Segoe UI]"
+								class="w-[clamp(3rem,8vw,4.5rem)] h-[clamp(3rem,8vw,4.5rem)] text-[clamp(1.75rem,4vw,2rem)] text-center font-semibold text-[#a9a9a9] border-2 border-[#b3afa7] bg-[#fdfaf5] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#b3afa7]/40 transition-all duration-150 font-[Segoe UI]"
 							/>
 						</div>
 					{/each}

@@ -241,18 +241,20 @@
     }
 
     .modal_body {
-        /* padding: 0 0 0.5rem 0; */
-        margin: 0.2rem 0 0.7rem 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+        width: 100%;
+        padding: 1rem;
+        box-sizing: border-box;
     }
 
     .modal_body_text {
-        font-size: 1.5rem;
+        font-size: clamp(1.2rem, 4vw, 1.5rem);
         font-weight: 500;
         font-family: system-ui, sans-serif;
+        text-align: center;
     }
 
     .modal_button {
@@ -267,11 +269,13 @@
     }
 
     .player_name_input {
-        font-size: 1.5rem;
+        width: clamp(220px, 80%, 400px);
+        font-size: clamp(1rem, 3.5vw, 1.5rem);
         border-radius: 10px;
-        padding: 0.7rem;
+        padding: 0.7rem 1rem;
         text-align: center;
         border-width: 3px;
+        box-sizing: border-box;
     }
 
 
