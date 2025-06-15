@@ -126,7 +126,7 @@ export class GameManager {
         for(const player of ended_room.getRoomPlayers()) {
             player.getPlayerId().emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                 type: SocketMessages.TIMER_ENDED,
-                payload: { players: formatPlayers(ended_room.getRoomPlayers(), ended_room.getRoomCreator()) }
+                payload: { players: formatPlayers(ended_room.getRoomPlayers(), ended_room.getRoomCreator()), correct_word: ended_room.getActiveWord() }
             }));
         }
     }

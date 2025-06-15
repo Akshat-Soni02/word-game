@@ -126,7 +126,7 @@
 					setTimeout(() => {
 						play_sound = false;
 					}, 100);
-                    toast(`Time's Up!`);
+                    toast(`Time's Up, the word was ${message.payload.correct_word}`);
 					goto(`/game/${room_id}/scores`);
                     break;
                 

@@ -14,4 +14,4 @@ export type GuessedCorrectWordMessage = { type: SocketMessages.CORRECT_WORD_GUES
 export type SomeoneGuessedCorrectWordMessage = { type: SocketMessages.CORRECT_WORD; payload: { player_name: string, correct_word: string }};
 export type GuessedCorrectWordAndGameEndMessage = { type: SocketMessages.CORRECT_WORD_GUESS_GAME_END; payload: { players: Players }};
 export type SomeoneGuessedCorrectWordAndGameEndMessage = { type: SocketMessages.CORRECT_WORD_GAME_END; payload: { player_name: string, correct_word: string, players: Players}};
-export type TimerEndMessage = { type: SocketMessages.TIMER_ENDED; payload: { players: Players }}
+export type TimerEndMessage = { type: SocketMessages.TIMER_ENDED; payload: { players: Players, correct_word: string }}

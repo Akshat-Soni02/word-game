@@ -87,7 +87,7 @@
             <div class="step-card">
                 <h3 class="step-title">1. Create or Join a Room</h3>
                 <p class="step-text">
-                    Choose a mode and set your player name. Friends can join using the room code.
+                    Set your player name. Friends can join using the room code.
                 </p>
             </div>
     
