@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { generateRoomId, generateWordSequence } from "./helpers/generator";
+import { generateRndInteger, generateRoomId, generateWordSequence } from "./helpers/generator";
 import { Player } from "./Player";
 import { RoomState } from "./states";
 
@@ -42,6 +42,10 @@ export class Room {
         return this.room_state;
     }
 
+    isRoomCreator = (socket: Socket) => {
+        return this.room_creator === socket;
+    }
+
     isValidWord = () => {
         return this.word_sequence.length - 1 >= this.active_word_index;
     }
@@ -62,6 +66,9 @@ export class Room {
 
     removePlayer = (socket: Socket) => {
         this.players = this.players.filter((player) => player.getPlayerId() !== socket);
+        if(socket === this.room_creator) {
+            this.room_creator = this.players[generateRndInteger(0, this.players.length)].getPlayerId();
+        }
     }
 
     changeRoomState = (new_state: RoomState) => {

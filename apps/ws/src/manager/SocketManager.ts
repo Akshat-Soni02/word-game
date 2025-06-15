@@ -24,6 +24,10 @@ export class SocketManager {
                     this.game_manager.joinExistingRoom(socket, message.payload);
                     break;
 
+                case SocketMessages.EXIT_ROOM:
+                    this.game_manager.exitExistingRoom(socket, message.payload);
+                    break;
+
                 case SocketMessages.START_GAME:
                     this.game_manager.initGame(socket, message.payload);
                     break;

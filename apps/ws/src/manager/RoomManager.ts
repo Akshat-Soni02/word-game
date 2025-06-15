@@ -26,6 +26,12 @@ export class RoomManager {
         return existing_room;
     }
 
+    exitRoom = (room_id: string, socket: Socket) => {
+        const existing_room = this.rooms.find((room) => room.getRoomId() === room_id);
+        existing_room?.removePlayer(socket);
+        return existing_room;
+    }
+
     initRoomGame = (room_id: string) => {
         const existing_room = this.rooms.find((room) => room.getRoomId() === room_id);
         existing_room?.changeRoomState(RoomState.GAME_ONGOING);

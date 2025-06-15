@@ -2,7 +2,7 @@ import { Socket } from "socket.io";
 import { RoomManager } from "./RoomManager";
 import { compareWords } from "../helpers/word";
 import { SocketMessages, SocketChannels } from "../states";
-import { CreateRoomRequest, JoinRoomRequest, InitGameRequest, TimerEndRequest, WordHitRequest } from "../types";
+import { CreateRoomRequest, JoinRoomRequest, InitGameRequest, TimerEndRequest, WordHitRequest, ExitRoomRequest } from "../types";
 import { formatPlayers } from "../helpers/formator";
 
 export class GameManager {
@@ -13,6 +13,7 @@ export class GameManager {
     }
 
     newRoom = (socket: Socket, data: CreateRoomRequest) => {
+        if(!data.player_name) return;
         const new_room = this.room_manager.createRoom(socket, data.player_name);
 
         /**
@@ -20,11 +21,12 @@ export class GameManager {
          */
         socket.emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
             type: SocketMessages.ROOM_CREATED,
-            payload: { room_id: new_room.getRoomId(), players: formatPlayers(new_room.getRoomPlayers())}
+            payload: { room_id: new_room.getRoomId(), players: formatPlayers(new_room.getRoomPlayers(), new_room.getRoomCreator())}
         }));
     }
 
     joinExistingRoom = (socket: Socket, data: JoinRoomRequest) => {
+        if(!data.room_id || !data.player_name) return;
         const existing_room = this.room_manager.joinRoom(data.room_id, socket, data.player_name);
 
         if(!existing_room) {
@@ -39,7 +41,7 @@ export class GameManager {
          */
         socket.emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
             type: SocketMessages.ROOM_JOINED,
-            payload: { players: formatPlayers(existing_room.getRoomPlayers())}
+            payload: { players: formatPlayers(existing_room.getRoomPlayers(), existing_room.getRoomCreator())}
         }));
 
         const players_without_joinee = existing_room.getRoomPlayers().filter((player) => player.getPlayerId() !== socket);
@@ -50,7 +52,37 @@ export class GameManager {
         for (const other_player of players_without_joinee) {
             other_player.getPlayerId().emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                 type: SocketMessages.SOMEONE_JOINED,
-                payload: { players: formatPlayers(existing_room.getRoomPlayers()), player_name: data.player_name }
+                payload: { players: formatPlayers(existing_room.getRoomPlayers(), existing_room.getRoomCreator()), player_name: data.player_name }
+            }));
+        }
+    }
+
+    exitExistingRoom = (socket: Socket, data: ExitRoomRequest) => {
+        if(!data.room_id) return;
+        const existing_room = this.room_manager.exitRoom(data.room_id, socket);
+
+        if(!existing_room) {
+            socket.emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
+                type: SocketMessages.INVALID_REQUEST
+            }));
+            return;
+        }
+
+        /**
+         * sending confirmation to player who exited room
+         */
+        socket.emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
+            type: SocketMessages.ROOM_EXITED
+        }));
+
+        /**
+         * sending to all players since current user
+         * alreay left
+         */
+        for (const all_players of existing_room.getRoomPlayers()) {
+            all_players.getPlayerId().emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
+                type: SocketMessages.SOMEONE_EXITED,
+                payload: { players: formatPlayers(existing_room.getRoomPlayers(), existing_room.getRoomCreator()), player_name: data.player_name }
             }));
         }
     }
@@ -94,7 +126,7 @@ export class GameManager {
         for(const player of ended_room.getRoomPlayers()) {
             player.getPlayerId().emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                 type: SocketMessages.TIMER_ENDED,
-                payload: { players: formatPlayers(ended_room.getRoomPlayers()) }
+                payload: { players: formatPlayers(ended_room.getRoomPlayers(), ended_room.getRoomCreator()) }
             }));
         }
     }
@@ -121,6 +153,8 @@ export class GameManager {
         const compare_result = compareWords(client_word, actual_word);
         switch (compare_result.message) {
             case 'word_match':
+
+                console.log(`Correct word hit - ${compare_result.word}`)
                 /**
                  * high chances of concurrency
                  * problem
@@ -133,7 +167,7 @@ export class GameManager {
                      */
                     socket.emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                         type: SocketMessages.CORRECT_WORD_GUESS_GAME_END,
-                        payload: { players: formatPlayers(running_room.getRoomPlayers()) }
+                        payload: { players: formatPlayers(running_room.getRoomPlayers(), running_room.getRoomCreator()) }
                     }));
 
                     const active_player = running_room.getRoomPlayers().find((player) => player.getPlayerId() === socket);
@@ -146,7 +180,7 @@ export class GameManager {
                     for (const player of other_players) {
                         player.getPlayerId().emit(SocketChannels.DEFAULT_CHANNEL, JSON.stringify({
                             type: SocketMessages.CORRECT_WORD_GAME_END,
-                            payload: { player_name: active_player?.getPlayerName(), correct_word: compare_result.word, players: formatPlayers(running_room.getRoomPlayers())}
+                            payload: { player_name: active_player?.getPlayerName(), correct_word: compare_result.word, players: formatPlayers(running_room.getRoomPlayers(), running_room.getRoomCreator())}
                         }));
                     }
 
@@ -179,6 +213,8 @@ export class GameManager {
                 break;
 
             case 'letter_match':
+                console.log(`Correct letters match`);
+                console.log(compare_result.matches);
                 const all_players = running_room.getRoomPlayers();
 
                 for( const player of all_players) {

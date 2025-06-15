@@ -11,3 +11,8 @@ export const generateWordSequence = () : Array<string> => {
     const generated_seq = generate({ exactly: seq_len, minLength: Number(process.env.MIN_WORD_LENGTH) || 5, maxLength: Number(process.env.MAX_WORD_LENGTH) || 5});
     return typeof generated_seq === 'string' ? [generated_seq] : generated_seq;
 }
+
+// min in included but max is excluded
+export const generateRndInteger = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
