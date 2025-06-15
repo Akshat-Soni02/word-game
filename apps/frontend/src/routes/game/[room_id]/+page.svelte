@@ -162,7 +162,7 @@
 							<!-- Feedback Letter -->
 							{#if feedbacks[i]}
 								<div
-									class="absolute -top-20 w-16 h-16 flex items-center justify-center text-3xl font-semibold bg-green-500 text-white rounded-lg shadow-md fade-in-out transition-all duration-300"
+									class="absolute -top-[5.5rem] w-[clamp(3rem,8vw,5rem)] h-[clamp(3rem,8vw,5rem)] flex items-center justify-center text-[clamp(1.5rem,4vw,2rem)] font-semibold bg-green-500 text-white rounded-lg shadow-md fade-in-out transition-all duration-300"
 								>
 									{feedbacks[i]}
 								</div>
@@ -171,7 +171,7 @@
 							<!-- Input Box -->
 							<InputOTP.Slot
 								{cell}
-								class="w-20 h-20 text-4xl text-center font-semibold text-[#a9a9a9] border-2 border-[#b3afa7] bg-[#fdfaf5] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#b3afa7]/40 transition-all duration-150 font-[Segoe UI]"
+								class="w-[clamp(3.5rem,9vw,5rem)] h-[clamp(3.5rem,9vw,5rem)] text-[clamp(2rem,5vw,2.5rem)] text-center font-semibold text-[#a9a9a9] border-2 border-[#b3afa7] bg-[#fdfaf5] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#b3afa7]/40 transition-all duration-150 font-[Segoe UI]"
 							/>
 						</div>
 					{/each}
