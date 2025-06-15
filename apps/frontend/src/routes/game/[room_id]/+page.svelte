@@ -170,6 +170,7 @@
 				
 							<!-- Input Box -->
 							<InputOTP.Slot
+								typeof = "text"
 								inputmode="text"
 								{cell}
 								class="w-[clamp(3rem,8vw,4.5rem)] h-[clamp(3rem,8vw,4.5rem)] text-[clamp(1.75rem,4vw,2rem)] text-center font-semibold text-[#a9a9a9] border-2 border-[#b3afa7] bg-[#fdfaf5] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#b3afa7]/40 transition-all duration-150 font-[Segoe UI]"
