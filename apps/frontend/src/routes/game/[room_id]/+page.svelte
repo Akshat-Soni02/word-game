@@ -146,7 +146,7 @@
 <!-- TIMER HEADER -->
 <div class="page-header">
 	<h2 class="timer-head">Time Left:</h2>
-	<Timer duration = {80} onComplete = {handleTimerEndEmit} />
+	<Timer duration = {120} onComplete = {handleTimerEndEmit} />
 </div>
 
 <!-- WORD INPUT SECTION -->
