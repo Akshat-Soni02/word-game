@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	let { duration = 60, onComplete = () => console.log("⏰ Time's up!") } = $props();
+	let { duration = 60, onComplete = () => alert("⏰ Time's up!") } : { duration: number, onComplete: any} = $props();
 
 	let timeLeft = $derived(duration);
 	let interval: ReturnType<typeof setInterval>;
@@ -19,11 +19,13 @@
 		return () => clearInterval(interval);
 	});
 
-	let bubbleColor = $derived(timeLeft > 30
-		? '#21C55E' // Green
-		: timeLeft > 10
-		? '#ffc857' // Yellow
-		: '#EF4545') // Red
+	let bubbleColor = $derived.by(() => {
+		const ratio = timeLeft / duration;
+
+		if (ratio > 0.5) return '#21C55E'; // Green
+		else if (ratio > 0.2) return '#ffc857'; // Yellow
+		else return '#EF4545'; // Red
+	});
 </script>
 
 <div class="timer-container">
