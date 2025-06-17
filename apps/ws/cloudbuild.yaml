@@ -1,11 +1,11 @@
 steps:
   # Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/word-game-project-463017/word-game-socket-backend', '.' ]
+    args: [ 'build', '-t', 'gcr.io/${_PROJECT_ID}/word-game-socket-backend', '.' ]
 
   # Push to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/word-game-project-463017/word-game-socket-backend' ]
+    args: [ 'push', 'gcr.io/${_PROJECT_ID}/word-game-socket-backend' ]
 
 images:
-  - 'gcr.io/word-game-project-463017/word-game-socket-backend'
+  - 'gcr.io/${_PROJECT_ID}/word-game-socket-backend'
