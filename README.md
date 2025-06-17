@@ -6,6 +6,10 @@ A fast-paced, real-time multiplayer word-guessing game where players compete to 
 
 ---
 
+🌐 Live Demo: [Play the game](https://word-game-jade.vercel.app)
+
+---
+
 ## 📌 Project Title
 
 **To be decided** (codename: word-game)
