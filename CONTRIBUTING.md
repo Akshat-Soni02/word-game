@@ -17,8 +17,8 @@ Maintain clear, descriptive branch names for different purposes:
 
 ### Main Branches
 
-- `` – Always deployable, holds stable release code.
-- `` – Integration branch for current sprint’s features; merges into `main` when ready.
+- `Main` – Always deployable, holds stable release code.
+- `Develop` – Integration branch for current sprint’s features; merges into `main` when ready.
 
 ---
 
@@ -38,13 +38,13 @@ feat(api)!: send an email when product is shipped
 
 ### Types
 
-- ``: A new feature
-- ``: A bug fix
-- ``: Documentation only changes
-- ``: Formatting, missing semicolons, etc.
-- ``: Code changes that neither fix a bug nor add a feature
-- ``: Adding or correcting tests
-- ``: Build process or auxiliary tools changes
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Formatting, missing semicolons, etc.
+- `refactor`: Code changes that neither fix a bug nor add a feature
+- `test`: Adding or correcting tests
+- `chore`: Build process or auxiliary tools changes
 
 ---
 
@@ -58,10 +58,4 @@ feat(api)!: send an email when product is shipped
 
 - Clearly state the purpose of the change.
 - List any new dependencies or environment variables.
-
-### Review Checklist
-
--
-
----
 

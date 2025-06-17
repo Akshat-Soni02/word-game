@@ -1,6 +1,6 @@
 # Multiplayer Word Guessing Game
 
-![word-game]("statics/images/word-game-home.png")
+![word-game](statics/images/word-game-home.png)
 
 A fast-paced, real-time multiplayer word-guessing game where players compete to guess a hidden word before anyone else in the room does. Built with a modern web stack in a monorepo managed by Turborepo.
 
