@@ -1,84 +1,108 @@
-# Turborepo starter
+# Multiplayer Word Guessing Game
 
-This Turborepo starter is maintained by the Turborepo core team.
+![word-game]("statics/images/word-game-home.png")
 
-## Using this example
+A fast-paced, real-time multiplayer word-guessing game where players compete to guess a hidden word before anyone else in the room does. Built with a modern web stack in a monorepo managed by Turborepo.
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
-```
+## 📌 Project Title
 
-## What's inside?
+**To be decided** (codename: word-game)
 
-This Turborepo includes the following packages/apps:
+##  Short Description
 
-### Apps and Packages
+Players join a shared room to guess words from a fixed sequence. First to guess correctly earns points, then all progress to the next word. The game ends when the word pool is exhausted or the global timer runs out, and a leaderboard ranks players by points.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+---
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## 🗂️ Monorepo Structure
 
 ```
-cd my-turborepo
-pnpm build
+apps/
+├── frontend/   → SvelteKit (Svelte 5) client UI
+└── ws/         → Node.js + TypeScript WebSocket backend
 ```
 
-### Develop
+Shared tooling managed by Turborepo for streamlined builds and caching.
 
-To develop all apps and packages, run the following command:
+---
 
-```
-cd my-turborepo
-pnpm dev
-```
+## 🚀 Features
 
-### Remote Caching
+- Real-time multiplayer gameplay via WebSockets
+- Synchronized countdown and word sequence
+- Live hints broadcast when letters match
+- Scoring and automatic progression to next word
+- Final leaderboard by points
+- Flexible game modes (timer + word pool size)
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+---
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## 🛠️ Development Roadmap
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+1. **Initial MVP**: Basic lobby, room creation/join, guessing loop, scoring.
 
-```
-cd my-turborepo
-npx turbo login
-```
+---
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## 💻 Installation & Setup
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/akshat-soni02/word-game.git
+   cd word-game
+   ```
+2. **Install dependencies** (npm)
+   ```bash
+   npm install
+   ```
+3. **Run in development**
 
-```
-npx turbo link
-```
+   frontend
+   ```bash
+   cd apps/frontend
+   npm run dev -- --open
+   ```
 
-## Useful Links
+   ws
+   ```bash
+   cd apps/ws
+   npm run build
+   npm start
+   ```
 
-Learn more about the power of Turborepo:
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+---
+
+## ⚙️ Usage
+
+- **Create Room**: Host enters name, chooses mode, creates room.
+- **Join Room**: Enter room code or click invite link.
+- **Play**: Type guesses, watch real-time hints, earn points.
+- **End**: View final leaderboard when time or pool ends.
+
+---
+
+## 📦 Deployment
+
+- **Frontend**: Deployed `apps/frontend` to Vercel (`adapter-auto`).
+- **Backend**: Deployed `apps/ws` to Google Cloud Run (Docker).
+
+---
+
+## 🙋‍♂️ About Me
+
+Built by Akshat — Connect on [GitHub](https://github.com/akshat-soni02) or [LinkedIn](https://linkedin.com/in/-akshat-soni).
+
+---
+
+## 📚 Useful Links
+
+- [Turborepo Docs](https://turborepo.org/docs)
+- [SvelteKit Docs](https://kit.svelte.dev/docs)
+- [WebSocket API (MDN)](https://developer.mozilla.org/docs/Web/API/WebSockets_API)
+
